@@ -25,6 +25,9 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:30.1-jre'
+
+    implementation files('./src/lib/bcprov-jdk15on-169.jar')
+    implementation files('./src/lib/bitcoinj-core-0.15.10.jar')
 }
 
 tasks.named('test') {
