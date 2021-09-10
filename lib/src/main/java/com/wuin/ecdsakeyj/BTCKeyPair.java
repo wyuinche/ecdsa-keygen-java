@@ -11,7 +11,6 @@ public class BTCKeyPair extends ECDSAKeyPair {
         if(_priv != null) {
             this.priv = _priv;
         }
-
         createPublicKey();
     }
 
