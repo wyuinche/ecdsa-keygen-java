@@ -1,13 +1,7 @@
 package com.wuin.ecdsakeyj;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.Security;
-import java.security.spec.ECGenParameterSpec;
-
 import org.bitcoinj.core.*;
 import org.bitcoinj.params.*;
-import org.bouncycastle.jce.provider.*;
 
 public class BTCKeyPair extends ECDSAKeyPair {
     private ECKey keypair;
@@ -27,33 +21,23 @@ public class BTCKeyPair extends ECDSAKeyPair {
     }
     
     private String createPrivateKey() {
-        Security.addProvider(new BouncyCastleProvider());
-        
         try {    
-            KeyPairGenerator gen = KeyPairGenerator.getInstance("ECDSA", "BC");
-            ECGenParameterSpec spec = new ECGenParameterSpec("secp256k1");
-            gen.initialize(spec);
+            ECKey keypair = new ECKey();
+            String _priv = "80" + keypair.getPrivateKeyAsHex() + "01";
+            byte[] _bpriv = hexStringToBytes(_priv);
 
-            KeyPair btcKeyPair = gen.generateKeyPair();
+            byte[] _hs = Sha256Hash.hashTwice(_bpriv);
 
-            String _temp = btcKeyPair.getPrivate().toString();
-            int idx = _temp.indexOf(":") + 2;
-            String _pk = "80" + _temp.substring(idx, idx+64) + "01";
-
-            byte[] bytePk = Util.hexStringToBytes(_pk);
-
-            byte[] _hash = new Hash(new Hash(bytePk).getSha256Digest()).getSha256Digest();
             byte[] checksum = new byte[4];
-            System.arraycopy(_hash, 0, checksum, 0, 4);
+            System.arraycopy(_hs, 0, checksum, 0, 4);
 
-            byte[] pk = new byte[bytePk.length + 4];
-            System.arraycopy(bytePk, 0, pk, 0, bytePk.length);
-            System.arraycopy(checksum, 0, pk, bytePk.length, 4);
+            byte[] _pk = new byte[_bpriv.length + 4];
+            System.arraycopy(_bpriv, 0, _pk, 0, _bpriv.length);
+            System.arraycopy(checksum, 0, _pk, _bpriv.length, 4);
 
-            String encoded = Base58.encode(pk);
-            return encoded;
+            return Base58.encode(_pk);
         } catch(Exception e) {
-            Util.raiseError("Fail to create new private key.");
+            Util.raiseError("Fail to generate new BTC Keypair.");
             return null;
         }
     }
@@ -78,6 +62,6 @@ public class BTCKeyPair extends ECDSAKeyPair {
 
     @Override
     public byte[] sign(byte[] target) {
-        return sign(new String(target));
+        return keypair.sign(Sha256Hash.twiceOf(target)).encodeToDER();
     }
 }
