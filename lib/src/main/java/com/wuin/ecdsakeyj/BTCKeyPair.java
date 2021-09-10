@@ -23,7 +23,7 @@ public class BTCKeyPair extends ECDSAKeyPair {
         try {    
             ECKey keypair = new ECKey();
             String _priv = "80" + keypair.getPrivateKeyAsHex() + "01";
-            byte[] _bpriv = hexStringToBytes(_priv);
+            byte[] _bpriv = Util.hexStringToBytes(_priv);
 
             byte[] _hs = Sha256Hash.hashTwice(_bpriv);
 

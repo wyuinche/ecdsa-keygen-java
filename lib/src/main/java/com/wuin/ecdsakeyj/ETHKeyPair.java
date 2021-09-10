@@ -1,13 +1,14 @@
 package com.wuin.ecdsakeyj;
 
 import org.bitcoinj.core.*;
-import org.bitcoinj.params.*;
 import org.web3j.crypto.ECKeyPair;
-import org.web3j.crypto.Keys;
 import org.web3j.crypto.ECDSASignature;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 public class ETHKeyPair extends ECDSAKeyPair {
-    private ECKeyPair kepair;
+    private ECKeyPair keypair;
 
     public ETHKeyPair() {
         String _priv = createPrivateKey();
@@ -33,10 +34,10 @@ public class ETHKeyPair extends ECDSAKeyPair {
 
     @Override
     public void createPublicKey() {
-        this.keypair = ECKeyPair.create(hexStringToBytes(this.priv));
+        this.keypair = ECKeyPair.create(Util.hexStringToBytes(this.priv));
         
-        String _pub = bytesToHexString(this.keypair.getPublicKey().toByteArray());
-        this.pub = "04" + _pub.substring(2, _pub.length());
+        String _pub = Util.bytesToHexString(this.keypair.getPublicKey().toByteArray());
+        this.pub = "04" + _pub.substring(2, _pub.length()).toLowerCase();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class ETHKeyPair extends ECDSAKeyPair {
         int rlen = r.length;
         int slen = s.length;
 
-        byte[] brlen = ByteBuffer.allocate(4).order("little").putLong(new Long(rlen)).array();
+        byte[] brlen = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(rlen).array();
 
         byte[] sig = new byte[rlen + slen + 4];
         System.arraycopy(brlen, 0, sig, 0, 4);
