@@ -50,7 +50,7 @@ public class ETHKeyPair extends ECDSAKeyPair {
         this.keypair = ECKeyPair.create(Util.hexStringToBytes(this.priv));
         
         String _pub = Util.bytesToHexString(this.keypair.getPublicKey().toByteArray());
-        this.pub = "04" + _pub.substring(2, _pub.length()).toLowerCase();
+        this.pub = "04" + _pub.substring(0, _pub.length()).toLowerCase();
     }
 
     @Override
