@@ -122,8 +122,8 @@ wRcd8Nkcss8ChuCAQnK6CEevaPTXnCdikVvTH3eNd7DJ
 
 >>> String msg = "Hello, world!";
 
->>> byte[] btcSig = btcKeyPair(msg.getBytes());
->>> byte[] ethKeyPair = ethKeyPair(msg.getBytes());
+>>> byte[] btcSig = btcKeyPair.sign(msg.getBytes());
+>>> byte[] ethKeyPair = ethKeyPair.sign(msg.getBytes());
 ```
 
 Note that the result is up to each keypair.
