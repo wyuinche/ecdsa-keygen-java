@@ -11,6 +11,10 @@
  */
 package com.wuin.ecdsakeyj;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Util {
     public static void raiseError(String msg) {
         System.out.println(msg);
@@ -19,6 +23,22 @@ public class Util {
 
     public static void log(String msg) {
         System.out.println(msg);
+    }
+
+    public static byte[] sha3(String msg) {
+        return sha3(msg.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static byte[] sha3(byte[] target) {
+        try {
+            MessageDigest hasher = MessageDigest.getInstance("SHA3-256");
+            return hasher.digest(target);
+            
+        } catch(NoSuchAlgorithmException e) {
+            Util.raiseError("No such algorithm; sha3-256");
+        }
+
+        return new byte[0];
     }
 
     public static byte[] hexStringToBytes(String s) {
