@@ -36,13 +36,12 @@ public class BTCKeyPair extends ECDSAKeyPair {
             shb = Arrays.copyOfRange(shb, 0, shb.length - 4);
 
             BigInteger k = new BigInteger(shb);
-            BigInteger n = ECKey.HALF_CURVE_ORDER.subtract(new BigInteger("1"));
+            BigInteger n = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494336");
 
             k = k.mod(n);
             k = k.add(new BigInteger("1"));
-
             String key = Util.bytesToHexString(k.toByteArray());
-
+            
             try {
                 String _priv = encodeKey(key);
                 this.priv = _priv;
