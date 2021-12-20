@@ -1,7 +1,9 @@
 # ecdsa-keygen-java
 ECDSA KeyPair Generator for Java
 
-This package supports ecdsa keypair for btc and ether.
+This library supports ecdsa keypair(btc compressed wif and ether).
+
+This library is for [mitum-java-util](https://github.com/ProtoconNet/mitum-java-util).
 
 ## Installation
 
@@ -40,9 +42,9 @@ Download and use 'ecdsa-keygen-java-1.1' in 'release' tab or [here](release/).
 'BTCKeyPair' support to sign message with btc keypairs.
 
 ```java
->>> String BTCKeyPair.getPrivateKey() // returns compressed btc private key
->>> String BTCKeyPair.getPublicKey() //returns base58 encoded btc public key
->>> byte[] BTCKeyPair.sign(byte[] msg) // returns signature signed with private key
+String BTCKeyPair.getPrivateKey() // returns compressed btc private key
+String BTCKeyPair.getPublicKey() //returns base58 encoded btc public key
+byte[] BTCKeyPair.sign(byte[] msg) // returns signature signed with private key
 ```
 
 ## ETHKeyPair
@@ -50,9 +52,9 @@ Download and use 'ecdsa-keygen-java-1.1' in 'release' tab or [here](release/).
 'ETHKeyPair' support to sign message with ether keypairs.
 
 ```java
->>> String ETHKeyPair.getPrivateKey() // returns ether private key
->>> String ETHKeyPair.getPublicKey() //returns ether public key
->>> byte[] ETHKeyPair.sign(byte[] msg) // returns signature signed with private key
+String ETHKeyPair.getPrivateKey() // returns ether private key
+String ETHKeyPair.getPublicKey() //returns ether public key
+byte[] ETHKeyPair.sign(byte[] msg) // returns signature signed with private key
 ```
 
 ## Usage
@@ -62,20 +64,20 @@ This section will introduce to create or import keypair and sign message.
 Import path for every class is 'com.wuin.ecdsakeyj'
 
 ```java
->>> import com.wuin.ecdsakeyj;
+import com.wuin.ecdsakeyj;
 ```
 
 ### Create New KeyPair
 
 ```java
->>> BTCKeyPair btcKeyPair = new BTCKeyPair();
->>> ETHKeyPair ethKeyPair = new ETHKeyPair();
+BTCKeyPair btcKeyPair = new BTCKeyPair();
+ETHKeyPair ethKeyPair = new ETHKeyPair();
 
->>> System.out.println(btcKeyPair.getPrivateKey());
->>> System.out.println(btcKeyPair.getPublicKey());
+System.out.println(btcKeyPair.getPrivateKey());
+System.out.println(btcKeyPair.getPublicKey());
 
->>> System.out.println(ethKeyPair.getPrivateKey());
->>> System.out.println(ethKeyPair.getPublicKey());
+System.out.println(ethKeyPair.getPrivateKey());
+System.out.println(ethKeyPair.getPublicKey());
 ```
 
 -must print,
@@ -92,17 +94,17 @@ Note that the result is up to each keypair.
 ### Create KeyPair from Private Key
 
 ```java
->>> String btcPriv = "Ky7uryfGoK4wnNPXEP71yeM64HN4KKhhvV4Kn7VZyHovcpatNkQX";
->>> String ethPriv = "4ca85fd2d908a77e5b6e5d15e222ae70d1d70c5101cd880a7e2ff2796c6d56ac";
+String btcPriv = "Ky7uryfGoK4wnNPXEP71yeM64HN4KKhhvV4Kn7VZyHovcpatNkQX";
+String ethPriv = "4ca85fd2d908a77e5b6e5d15e222ae70d1d70c5101cd880a7e2ff2796c6d56ac";
 
->>> BTCKeyPair btcKeyPair = new BTCKeyPair(btcPriv);
->>> ETHKeyPair ethKeyPair = new ETHKeyPair(ethPriv);
+BTCKeyPair btcKeyPair = new BTCKeyPair(btcPriv, false);
+ETHKeyPair ethKeyPair = new ETHKeyPair(ethPriv);
 
->>> System.out.println(btcKeyPair.getPrivateKey());
->>> System.out.println(btcKeyPair.getPublicKey());
+System.out.println(btcKeyPair.getPrivateKey());
+System.out.println(btcKeyPair.getPublicKey());
 
->>> System.out.println(ethKeyPair.getPrivateKey());
->>> System.out.println(ethKeyPair.getPublicKey());
+System.out.println(ethKeyPair.getPrivateKey());
+System.out.println(ethKeyPair.getPublicKey());
 ```
 
 -must print,
@@ -114,16 +116,34 @@ wRcd8Nkcss8ChuCAQnK6CEevaPTXnCdikVvTH3eNd7DJ
 04fc2887ca1d0a5b2a9ca0fd2ea82a29112ad61fde75d83de1b9c291b4bdd38363fa8a6950161dabec102c780d4d9d76c7a24d52f7979f5524d47d906727ed2c41
 ```
 
+### Create BTCKeyPair from Seed
+
+```java
+String seed = "This is a seed to create new BTCKePair";
+
+BTCKeyPair btcKeyPair = new BTCKeyPair(seed, true);
+
+System.out.println(btcKeyPair.getPrivateKey());
+System.out.println(btcKeyPair.getPublicKey());
+```
+
+-must print,
+
+```sh
+KzWdyW7X8pKprFSH3rUfGSor19oiBBVarjBakV2GjJjbn9CNjsxF
+mxfoQxXkbvfenQmeFXqzY5gvMY3KnTaPvGHkyhhQnRZb
+```
+
 ### Sign Message with KeyPair
 
 ```java
->>> BTCKeyPair btcKeyPair = new BTCKeyPair();
->>> ETHKeyPair ethKeyPair = new ETHKeyPair();
+BTCKeyPair btcKeyPair = new BTCKeyPair();
+ETHKeyPair ethKeyPair = new ETHKeyPair();
 
->>> String msg = "Hello, world!";
+String msg = "Hello, world!";
 
->>> byte[] btcSig = btcKeyPair.sign(msg.getBytes());
->>> byte[] etherSig = ethKeyPair.sign(msg.getBytes());
+byte[] btcSig = btcKeyPair.sign(msg.getBytes());
+byte[] etherSig = ethKeyPair.sign(msg.getBytes());
 ```
 
 Note that the result is up to each keypair.
