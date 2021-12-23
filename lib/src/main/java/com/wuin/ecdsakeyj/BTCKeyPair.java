@@ -21,7 +21,7 @@ import org.bitcoinj.params.*;
 public class BTCKeyPair extends ECDSAKeyPair {
     private ECKey keypair;
 
-    public BTCKeyPair() {
+    private BTCKeyPair() {
         String _priv = createPrivateKey();
         if (_priv != null) {
             this.priv = _priv;
@@ -29,29 +29,46 @@ public class BTCKeyPair extends ECDSAKeyPair {
         createPublicKey();
     }
 
-    public BTCKeyPair(String priv, Boolean useSeed) {
-        if (useSeed) {
-            byte[] sh = Util.sha3(priv);
-            byte[] shb = Base58.encode(sh).getBytes();
-            shb = Arrays.copyOfRange(shb, 0, shb.length - 4);
+    private BTCKeyPair(String priv) {
+        this.priv = priv;
+        createPublicKey();
+    }
 
-            BigInteger k = new BigInteger(shb);
-            BigInteger n = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494336");
+    private BTCKeyPair(byte[] seed) {
+        byte[] shb = Base58.encode(seed).getBytes();
+        shb = Arrays.copyOfRange(shb, 0, shb.length - 4);
 
-            k = k.mod(n);
-            k = k.add(new BigInteger("1"));
-            String key = Util.bytesToHexString(k.toByteArray());
-            
-            try {
-                String _priv = encodeKey(key);
-                this.priv = _priv;
-            } catch (Exception e) {
-                Util.raiseError("Fail to generate BTC Keypair from seed.");
-            }
-        } else {
-            this.priv = priv;
+        BigInteger k = new BigInteger(shb);
+        BigInteger n = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494336");
+
+        k = k.mod(n);
+        k = k.add(new BigInteger("1"));
+        String key = Util.bytesToHexString(k.toByteArray());
+
+        try {
+            String _priv = encodeKey(key);
+            this.priv = _priv;
+        } catch (Exception e) {
+            Util.raiseError("Fail to generate BTC Keypair from seed.");
         }
         createPublicKey();
+    }
+
+    public static BTCKeyPair create() {
+        return new BTCKeyPair();
+    }
+
+    public static BTCKeyPair fromPrivateKey(String priv) {
+        return new BTCKeyPair(priv);
+    }
+
+    public static BTCKeyPair fromSeed(String seed) {
+        byte[] sh = Util.sha3(seed);
+        return new BTCKeyPair(sh);
+    }
+
+    public static BTCKeyPair fromSeed(byte[] seed) {
+        return new BTCKeyPair(seed);
     }
 
     private String createPrivateKey() {

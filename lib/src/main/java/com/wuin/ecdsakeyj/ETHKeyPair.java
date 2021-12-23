@@ -22,7 +22,7 @@ import java.nio.ByteOrder;
 public class ETHKeyPair extends ECDSAKeyPair {
     private ECKeyPair keypair;
 
-    public ETHKeyPair() {
+    private ETHKeyPair() {
         String _priv = createPrivateKey();
         if(_priv != null) {
             this.priv = _priv;
@@ -30,9 +30,17 @@ public class ETHKeyPair extends ECDSAKeyPair {
         createPublicKey();
     }    
 
-    public ETHKeyPair(String priv) {
+    private ETHKeyPair(String priv) {
         super(priv);
         createPublicKey();
+    }
+
+    public static ETHKeyPair create() {
+        return new ETHKeyPair();
+    }
+
+    public static ETHKeyPair fromPrivateKey(String priv) {
+        return new ETHKeyPair(priv);
     }
 
     private String createPrivateKey() {

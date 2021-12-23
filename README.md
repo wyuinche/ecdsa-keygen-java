@@ -35,7 +35,11 @@ And this project includes below external libraries.
 * bitcoinj core v0.15.10
 * web3j core v4.8.7
 
-Download and use 'ecdsa-keygen-java-1.1' in 'release' tab or [here](release/).
+Download and use 'ecdsa-keygen-java-1.3.jar' in 'release' tab or [here](release/).
+
+```sh
+implementation files('./ecdsa-keygen-java-1.3.jar')
+```
 
 ## BTCKeyPair
 
