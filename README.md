@@ -35,10 +35,10 @@ And this project includes below external libraries.
 * bitcoinj core v0.15.10
 * web3j core v4.8.7
 
-Download and use 'ecdsa-keygen-java-1.3.jar' in 'release' tab or [here](release/).
+Download and use 'ecdsa-keygen-java-1.4.jar' in 'release' tab or [here](release/).
 
 ```sh
-implementation files('./ecdsa-keygen-java-1.3.jar')
+implementation files('./ecdsa-keygen-java-1.4.jar')
 ```
 
 ## BTCKeyPair
@@ -74,8 +74,8 @@ import com.wuin.ecdsakeyj;
 ### Create New KeyPair
 
 ```java
-BTCKeyPair btcKeyPair = new BTCKeyPair();
-ETHKeyPair ethKeyPair = new ETHKeyPair();
+BTCKeyPair btcKeyPair = BTCKeyPair.create();
+ETHKeyPair ethKeyPair = ETHKeyPair.create();
 
 System.out.println(btcKeyPair.getPrivateKey());
 System.out.println(btcKeyPair.getPublicKey());
@@ -101,8 +101,8 @@ Note that the result is up to each keypair.
 String btcPriv = "Ky7uryfGoK4wnNPXEP71yeM64HN4KKhhvV4Kn7VZyHovcpatNkQX";
 String ethPriv = "4ca85fd2d908a77e5b6e5d15e222ae70d1d70c5101cd880a7e2ff2796c6d56ac";
 
-BTCKeyPair btcKeyPair = new BTCKeyPair(btcPriv, false);
-ETHKeyPair ethKeyPair = new ETHKeyPair(ethPriv);
+BTCKeyPair btcKeyPair = BTCKeyPair.fromPrivateKey(btcPriv);
+ETHKeyPair ethKeyPair = ETHKeyPair.fromPrivateKey(ethPriv);
 
 System.out.println(btcKeyPair.getPrivateKey());
 System.out.println(btcKeyPair.getPublicKey());
@@ -124,11 +124,16 @@ wRcd8Nkcss8ChuCAQnK6CEevaPTXnCdikVvTH3eNd7DJ
 
 ```java
 String seed = "This is a seed to create new BTCKePair";
+byte[] bseed = seed.getBytes(StandardCharsets.UTF_8);
 
-BTCKeyPair btcKeyPair = new BTCKeyPair(seed, true);
+BTCKeyPair btcKeyPair = BTCKeyPair.fromSeed(seed);
+BTCKeyPair sbtcKeyPair = BTCKeyPair.fromSeed(bseed);
 
 System.out.println(btcKeyPair.getPrivateKey());
 System.out.println(btcKeyPair.getPublicKey());
+
+System.out.println(sbtcKeyPair.getPrivateKey());
+System.out.println(sbtcKeyPair.getPublicKey());
 ```
 
 -must print,
@@ -141,8 +146,8 @@ mxfoQxXkbvfenQmeFXqzY5gvMY3KnTaPvGHkyhhQnRZb
 ### Sign Message with KeyPair
 
 ```java
-BTCKeyPair btcKeyPair = new BTCKeyPair();
-ETHKeyPair ethKeyPair = new ETHKeyPair();
+BTCKeyPair btcKeyPair = BTCKeyPair.create();
+ETHKeyPair ethKeyPair = ETHKeyPair.create();
 
 String msg = "Hello, world!";
 

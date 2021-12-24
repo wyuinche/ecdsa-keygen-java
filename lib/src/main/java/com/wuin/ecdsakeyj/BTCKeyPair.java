@@ -13,6 +13,7 @@
 package com.wuin.ecdsakeyj;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.bitcoinj.core.*;
@@ -35,7 +36,8 @@ public class BTCKeyPair extends ECDSAKeyPair {
     }
 
     private BTCKeyPair(byte[] seed) {
-        byte[] shb = Base58.encode(seed).getBytes();
+        byte[] sh = Util.sha3(seed);
+        byte[] shb = Base58.encode(sh).getBytes();
         shb = Arrays.copyOfRange(shb, 0, shb.length - 4);
 
         BigInteger k = new BigInteger(shb);
@@ -63,8 +65,7 @@ public class BTCKeyPair extends ECDSAKeyPair {
     }
 
     public static BTCKeyPair fromSeed(String seed) {
-        byte[] sh = Util.sha3(seed);
-        return new BTCKeyPair(sh);
+        return new BTCKeyPair(seed.getBytes(StandardCharsets.UTF_8));
     }
 
     public static BTCKeyPair fromSeed(byte[] seed) {
