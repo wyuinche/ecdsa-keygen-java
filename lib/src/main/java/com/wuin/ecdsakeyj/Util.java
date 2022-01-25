@@ -12,8 +12,9 @@
 package com.wuin.ecdsakeyj;
 
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
+import org.bouncycastle.jcajce.provider.digest.SHA3.Digest256;
+import org.bouncycastle.jcajce.provider.digest.SHA3.DigestSHA3;
 
 public class Util {
     public static void raiseError(String msg) {
@@ -30,15 +31,10 @@ public class Util {
     }
 
     public static byte[] sha3(byte[] target) {
-        try {
-            MessageDigest hasher = MessageDigest.getInstance("SHA3-256");
-            return hasher.digest(target);
-            
-        } catch(NoSuchAlgorithmException e) {
-            Util.raiseError("No such algorithm; sha3-256");
-        }
+        DigestSHA3 sha3 = new Digest256();
+        sha3.update(target);
 
-        return new byte[0];
+        return sha3.digest();
     }
 
     public static byte[] hexStringToBytes(String s) {
