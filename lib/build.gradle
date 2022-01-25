@@ -26,6 +26,12 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:30.1-jre'
 
+    implementation 'org.ow2.asm:asm:9.0'
+    implementation 'org.ow2.asm:asm-analysis:9.0'
+    implementation 'org.ow2.asm:asm-commons:9.0'
+    implementation 'org.ow2.asm:asm-tree:9.0'
+    implementation 'org.ow2.asm:asm-util:9.0'
+
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'org.bitcoinj:bitcoinj-core:0.15.10'
     implementation 'org.web3j:core:4.8.7'
