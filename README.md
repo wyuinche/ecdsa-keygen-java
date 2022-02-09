@@ -9,24 +9,33 @@ This library is for [mitum-java-util](https://github.com/ProtoconNet/mitum-java-
 
 This project has developed by,
 
-* Gradle v7.1.1
-* OpenJDK v16.0.1
-* javac v16.0.1
+* Gradle v7.3.3
+* OpenJDK v17.0.1
+* javac v17.0.1
 
 ```sh
 $ gradle --version
+
 ------------------------------------------------------------
-Gradle 7.1.1
+Gradle 7.3.3
 ------------------------------------------------------------
-...
+
+Build time:   2021-12-22 12:37:54 UTC
+Revision:     6f556c80f945dc54b50e0be633da6c62dbe8dc71
+
+Kotlin:       1.5.31
+Groovy:       3.0.9
+Ant:          Apache Ant(TM) version 1.10.11 compiled on July 10 2021
+JVM:          17.0.1 (Oracle Corporation 17.0.1+12-LTS-39)
+OS:           Mac OS X 12.0.1 aarch64
 
 $ java --version
-openjdk 16.0.1 2021-04-20
-OpenJDK Runtime Environment (build 16.0.1+9-Ubuntu-120.04)
-OpenJDK 64-Bit Server VM (build 16.0.1+9-Ubuntu-120.04, mixed mode, sharing)
+java 17.0.1 2021-10-19 LTS
+Java(TM) SE Runtime Environment (build 17.0.1+12-LTS-39)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.1+12-LTS-39, mixed mode, sharing)
 
 $ javac --version
-javac 16.0.1
+javac 17.0.1
 ```
 
 And this project includes below external libraries.
@@ -35,10 +44,10 @@ And this project includes below external libraries.
 * bitcoinj core v0.15.10
 * web3j core v4.8.7
 
-Download and use 'ecdsa-keygen-java-1.4.jar' in 'release' tab or [here](release/).
+Download and use 'ecdsa-keygen-java-1.4-jdk17.jar' in 'release' tab or [here](release/).
 
 ```sh
-implementation files('./ecdsa-keygen-java-1.4.jar')
+implementation files('./ecdsa-keygen-java-1.4-jdk17.jar')
 ```
 
 ## BTCKeyPair
