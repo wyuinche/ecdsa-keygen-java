@@ -38,7 +38,12 @@ public class BTCKeyPair extends ECDSAKeyPair {
     private BTCKeyPair(byte[] seed) {
         byte[] sh = Util.sha3(seed);
         byte[] shb = Base58.encode(sh).getBytes();
-        shb = Arrays.copyOfRange(shb, 0, shb.length - 4);
+
+        if (shb.length < 44) {
+            shb = Arrays.copyOfRange(shb, 0, shb.length - 3);
+        } else {
+            shb = Arrays.copyOfRange(shb, 0, shb.length - 4);
+        }
 
         BigInteger k = new BigInteger(shb);
         BigInteger n = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494336");
